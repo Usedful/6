@@ -1,0 +1,185 @@
+Q-1 : Write a Java Program to implement command pattern to test Remote Control
+
+Ans ->
+
+1)Create Interface
+Command.java 
+
+package javaprograms; 
+
+interface Command 
+{ 
+ 	public void execute(); 
+} 
+
+2)Create Class
+Light.java
+
+package javaprograms; 
+
+public class Light
+{ 
+ 	public void on() 
+ 	{ 
+ 		System.out.println("Light is on");
+ 	} 
+ 
+	public void off() 
+ 	{ 
+ 		System.out.println("Light is off");
+ 	} 
+} 
+
+LightOnCommand.java 
+
+package javaprograms; 
+
+class LightOnCommand implements Command 
+{ 
+	Light light; 
+ 
+	public LightOnCommand(Light light) 
+ 	{ 
+ 		this.light = light; 
+ 	} 
+ 	public void execute() 
+ 	{ 
+ 		light.on(); 
+ 	} 
+} 
+
+
+LightOffCommand.java 
+
+package javaprograms; 
+
+class LightOffCommand implements Command 
+{ 
+ 	Light light; 
+ 	public LightOffCommand(Light light) 
+ 	{ 
+ 		this.light = light; 
+ 	} 
+ 	public void execute() 
+ 	{ 
+ 		light.off(); 
+ 	} 
+} 
+ 
+Stereo.java 
+
+package javaprograms; 
+
+public class Stereo
+{ 
+ 	public void on() 
+ 	{ 
+ 		System.out.println("Stereo is on");
+ 	} 
+ 	public void off() 
+ 	{ 
+ 		System.out.println("Stereo is off");
+ 	} 
+ 	public void setCD() 
+ 	{ 
+ 		System.out.println("Stereo is set " + "for CD input");
+ 	} 
+ 	public void setDVD() 
+ 	{ 
+		System.out.println("Stereo is set"+ " for DVD input");
+ 	} 
+ 	public void setRadio() 
+ 	{ 
+ 		System.out.println("Stereo is set" + " for Radio");
+ 	} 
+ 	public void setVolume(int volume) 
+ 	{ 
+		System.out.println("Stereo volume set" + " to " + volume);
+ 	} 
+} 
+
+StereoOffCommand.java 
+
+package javaprograms; 
+
+class StereoOffCommand implements Command 
+{ 
+ 	Stereo stereo; 
+ 	public StereoOffCommand(Stereo stereo) 
+ 	{ 
+ 		this.stereo = stereo; 
+ 	} 
+ 	public void execute() 
+ 	{ 
+ 		stereo.off(); 
+ 	} 
+} 
+
+
+StereoOnWithCDCommand.java 
+
+package javaprograms; 
+
+class StereoOnWithCDCommand implements Command 
+{ 
+ 	Stereo stereo; 
+	public StereoOnWithCDCommand(Stereo stereo) 
+ 	{ 
+ 		this.stereo = stereo; 
+ 	} 
+ 	public void execute() 
+ 	{ 
+ 		stereo.on(); 
+ 		stereo.setCD(); 
+ 		stereo.setVolume(11); 
+ 	} 
+} 
+
+
+SimpleRemoteControl.java 
+
+package javaprograms; 
+
+class SimpleRemoteControl 
+{ 
+
+ 	Command slot; 
+
+ 	public SimpleRemoteControl() 
+ 	{ 
+ 	} 
+ 
+	public void setCommand(Command command) 
+ 	{ 
+		slot = command; 
+ 	} 
+ 	public void buttonWasPressed() 
+ 	{ 
+ 		slot.execute(); 
+ 	} 
+} 
+
+
+RemoteControlTest.java 
+
+package javaprograms; 
+
+class RemoteControlTest 
+{ 
+ 	public static void main(String[] args) 
+ 	{ 
+ 		SimpleRemoteControl remote = new SimpleRemoteControl();
+ 		Light light = new Light(); 
+ 		Stereo stereo = new Stereo(); 
+
+		remote.setCommand(new
+ 		LightOnCommand(light)); 
+ 		remote.buttonWasPressed(); 
+ 		remote.setCommand(new
+ 		StereoOnWithCDCommand(stereo));
+ 		remote.buttonWasPressed(); 
+ 		remote.setCommand(new
+ 		StereoOffCommand(stereo)); 
+ 		remote.buttonWasPressed(); 
+ 	} 	
+}
